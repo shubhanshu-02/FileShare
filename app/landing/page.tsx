@@ -1,6 +1,7 @@
 import { ArrowRight, Download, Folder, Search, Shield, Upload, Zap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
+import Image from "next/image";
 
 export default function LandingPage(){
     return (
@@ -65,8 +66,10 @@ export default function LandingPage(){
         </div>
 
           <div className="mt-20 mx-auto max-w-6xl">
-            <img 
-              src="ss.png"
+            <Image 
+              src="/ss.png"
+              width="1500"
+              height="800"
               alt="FileShare Interface"
               className=" rounded-sm shadow-xl shadow-blue-500/50 border-25 border-zinc-800"
             />
