@@ -8,28 +8,32 @@ import path from "path";
 import { v4 } from "uuid";
 import { revalidatePath } from 'next/cache';
 
-interface FileRecord {
+export interface FileRecord {
     id: string
     name: string
     size: number
     type: string
-    path: string
+    url: string
     uploadedAt: string
     folderId: string | null
   }
   
-  interface FolderRecord {
+  export interface FolderRecord {
     id: string
     name: string
     parentId: string | null
     createdAt: string
   }
   
-  interface DB {
+  export interface DB {
     files: FileRecord[]
     folders: FolderRecord[]
   }
-
+  export interface FileTypeInfo {
+    type: string;
+    label: string;
+    count: number;
+  }
   
 const prisma = new PrismaClient()
 
@@ -43,6 +47,7 @@ const s3Client = new S3Client({
   })
   
   const BUCKET_NAME = process.env.S3_BUCKET_NAME!
+  const S3_PUBLIC_URL = process.env.S3_PUBLIC_URL!
 
 
   export async function uploadFile(formdata:FormData) {
@@ -54,6 +59,7 @@ const s3Client = new S3Client({
     const buffer = Buffer.from(await file.arrayBuffer())
     const id = v4()
     const key = `files/${id}/${file.name}`
+    const url = `${S3_PUBLIC_URL}/${key}`
 
     await s3Client.send(
       new PutObjectCommand({
@@ -62,6 +68,7 @@ const s3Client = new S3Client({
         Body: buffer,
         ContentType: file.type,
         ContentDisposition: `inline; filename = "${encodeURIComponent(file.name)}`,
+        ACL: 'public-read',
       })
     )
 
@@ -72,6 +79,7 @@ const s3Client = new S3Client({
         size:file.size,
         type:file.type,
         key:key,
+        url:url,
         folderId:folderId,
       }
     })
@@ -93,6 +101,7 @@ const s3Client = new S3Client({
       const buffer = Buffer.from(await file.arrayBuffer())
       const id = v4()
       const key = `files/${id}/${file.name}`
+      const url = `${S3_PUBLIC_URL}/${key}`
 
       await s3Client.send(
         new PutObjectCommand({
@@ -101,6 +110,7 @@ const s3Client = new S3Client({
           Body: buffer,
           ContentType: file.type,
           ContentDisposition: `inline; filename="${encodeURIComponent(file.name)}"`,
+          ACL:'public-read'
         })
       )
 
@@ -111,6 +121,7 @@ const s3Client = new S3Client({
           size:file.size,
           type:file.type,
           key:key,
+          url:url,
           folderId:folderId,
         }
       })
@@ -122,7 +133,7 @@ const s3Client = new S3Client({
   
   }
 
-  export async function getFiles(folderId: string | null = null) {
+  export async function getFiles(folderId: string | null = null):Promise<FileRecord[]> {
     const files = await prisma.file.findMany({
       where: {
         folderId: folderId
@@ -137,6 +148,7 @@ const s3Client = new S3Client({
       name: file.name,
       size: file.size,
       type: file.type,
+      url: file.url,
       uploadedAt: file.uploadedAt.toISOString(),
       folderId: file.folderId
     }))
@@ -151,4 +163,147 @@ const s3Client = new S3Client({
       parentId: folder.parentId,
       createdAt: folder.createdAt.toISOString()
     }))
+  }
+
+  export async function createFolder(data:{name:string, parentId:string | null }) {
+    const folder = await prisma.folder.create({
+      data:{
+        name:data.name,
+        parentId:data.parentId
+      }
+    })
+    revalidatePath("/")
+    return { id: folder.id }
+  }
+
+  export async function deleteFile(id: string) {
+    const file = await prisma.file.findUnique({
+      where: { id }
+    })
+    
+    if (!file) {
+      throw new Error("File not found")
+    }
+
+    await s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: file.key
+      })
+    )
+    await prisma.file.delete({
+      where: { id }
+    })
+    
+    revalidatePath("/drive")
+    return { success: true }
+  }
+
+  export async function deleteFolder(id: string) {
+    const folder = await prisma.folder.findUnique({
+      where: { id }
+    })
+    
+    if (!folder) {
+      throw new Error("Folder not found")
+    }
+    
+    const allFolderIds = await getAllChildFolderIds(id)
+    allFolderIds.push(id)
+    
+    const files = await prisma.file.findMany({
+      where: {
+        folderId: {
+          in: allFolderIds
+        }
+      }
+    })
+    
+    for (const file of files) {
+      await s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: BUCKET_NAME,
+          Key: file.key
+        })
+      )
+    }
+    
+    await prisma.file.deleteMany({
+      where: {
+        folderId: {
+          in: allFolderIds
+        }
+      }
+    })
+    
+    for (const folderId of allFolderIds.reverse()) {
+      await prisma.folder.delete({
+        where: { id: folderId }
+      })
+    }
+    
+    revalidatePath("/drive")
+    return { success: true }
+  }
+
+  async function getAllChildFolderIds(parentId: string): Promise<string[]> {
+    const childFolders = await prisma.folder.findMany({
+      where: { parentId }
+    })
+    
+    const childIds = childFolders.map(folder => folder.id)
+    
+    for (const childId of [...childIds]) {
+      const grandchildIds = await getAllChildFolderIds(childId)
+      childIds.push(...grandchildIds)
+    }
+    
+    return childIds
+  }
+
+
+  export async function getFileTypes(): Promise<FileTypeInfo[]> {
+    const files = await prisma.file.findMany()
+    
+    const typeCounts: Record<string, number> = {}
+    
+    files.forEach(file => {
+      const category = getFileCategory(file.type)
+      typeCounts[category] = (typeCounts[category] || 0) + 1
+    })
+    
+    return Object.entries(typeCounts)
+      .map(([type, count]) => ({
+        type,
+        label: getFileCategoryLabel(type),
+        count,
+      }))
+      .sort((a, b) => b.count - a.count) 
+  }
+  
+  function getFileCategory(mimeType: string): string {
+    if (mimeType.startsWith("image/")) return "image"
+    if (mimeType.startsWith("video/")) return "video"
+    if (mimeType.startsWith("audio/")) return "audio"
+    if (
+      mimeType.startsWith("text/") ||
+      mimeType.includes("document") ||
+      mimeType.includes("pdf") ||
+      mimeType.includes("sheet") ||
+      mimeType.includes("presentation")
+    ) {
+      return "document"
+    }
+    return "other"
+  }
+  
+  function getFileCategoryLabel(category: string): string {
+    const labels: Record<string, string> = {
+      image: "Images",
+      video: "Videos",
+      audio: "Audio",
+      document: "Documents",
+      other: "Other Files",
+    }
+    return labels[category] || "Other"
   }
