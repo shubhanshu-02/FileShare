@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function LandingPage(){
     return (
-        <div className="bg-muted">
+      <div className="bg-gradient-to-r from-gray-900 to-slate-800">
       <header className="border-b backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto py-4 flex items-center justify-between">
           <Link href="/landing" className="flex items-center gap-2">
@@ -41,7 +41,7 @@ export default function LandingPage(){
             Instant, Secure File Transfers
             <br />
             {/* —  */}
-            <span className="text-blue-500">Made Simple</span>
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text drop-shadow-xl">Made Simple</span>
           </h1>
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
             Manage and share files instantly. No signup required, <br /> no complicated interface. Just drag, drop, and share.
@@ -71,7 +71,7 @@ export default function LandingPage(){
               width="1500"
               height="800"
               alt="FileShare Interface"
-              className=" rounded-sm shadow-xl shadow-blue-500/50 border-25 border-zinc-800"
+              className=" rounded-sm shadow-[5px_5px_rgba(0,_98,_200,_0.6),_10px_10px_rgba(0,_98,_200,_0.3),_15px_15px_rgba(0,_98,_200,_0.2),_20px_20px_rgba(0,_98,_200,_0.1),_25px_25px_rgba(0,_98,_200,_0.05)] border-25 border-zinc-800"
             />
           </div>
       </section>
@@ -80,7 +80,7 @@ export default function LandingPage(){
       {/* Features Section */}
       <section id="features" className="py-20 bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-20">Key Features</h2>
+          <h2 className="text-5xl font-bold text-center mb-20 [text-shadow:0_0_15px_rgba(0,100,_255,_0.8)]">Key Features</h2>
 
           <div className="grid md:grid-cols-3 gap-8 mb-10">
             <div className="bg-background p-8 rounded-lg shadow-sm border border-gray-100">
@@ -137,7 +137,7 @@ export default function LandingPage(){
               </div>
               <h3 className="text-2xl font-semibold mb-2">Privacy Focused</h3>
               <p className="text-xl text-gray-400">
-                We don't track users or collect personal data. Your files are your business.
+                We don&apos;t track users or collect personal data. Your files are your business.
               </p>
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function LandingPage(){
       {/* How It Works */}
       <section id="how-it-works" className="py-15 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-16">How It Works</h2>
+          <h2 className="text-5xl font-bold text-center mb-16 [text-shadow:0_0_15px_rgba(0,100,_255,_0.8)]">How It Works</h2>
 
           <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto py-6 mb-10">
             <div className="text-center">
@@ -180,27 +180,27 @@ export default function LandingPage(){
       {/* FAQ Section */}
       <section id="faq" className="py-20 bg-gray-900">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-5xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <h2 className="text-5xl font-bold text-center mb-12 [text-shadow:0_0_15px_rgba(0,100,_255,_0.8)]">Frequently Asked Questions</h2>
 
           <div className="space-y-6">
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-2xl font-semibold mb-2">How long are files stored?</h3>
               <p className="text-xl text-gray-400">
-                Files are stored for 365 days after the last access. If a file isn't accessed for 365 days, it will be automatically removed.
+                Files are stored for 365 days after the last access. If a file isn&apos;t accessed for 365 days, it will be automatically removed.
               </p>
             </div>
 
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-2xl font-semibold mb-2">Is there a size limit for uploads?</h3>
               <p className="text-xl text-gray-400">
-                Yes, the maximum file size is 100MB per file. There's also a limit of 1GB total storage per session.
+                Yes, the maximum file size is 100MB per file. There&apos;s also a limit of 1GB total storage per session.
               </p>
             </div>
 
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-2xl font-semibold mb-2">Can I password protect my files?</h3>
               <p className="text-xl text-gray-400">
-                Not currently. Since FileShare is designed for simplicity, we don't offer password protection. For sensitive files, we recommend using an traditional service.
+                Not currently. Since FileShare is designed for simplicity, we don&apos;t offer password protection. For sensitive files, we recommend using an traditional service.
               </p>
             </div>
 
@@ -215,7 +215,7 @@ export default function LandingPage(){
       </section>
 
     {/* end Section */}
-      <section className="py-15 bg-blue-600 text-white">
+      <section className="py-10 bg-gradient-to-r from-cyan-600  to-purple-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-2xl mb-10 max-w-4xl mx-auto">
@@ -233,7 +233,7 @@ export default function LandingPage(){
       </section>
 
       {/* Footer */}
-      <footer className="py-10 bg-gray-900 text-gray-400">
+      <footer className="py-5 bg-gray-900 text-gray-400">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">

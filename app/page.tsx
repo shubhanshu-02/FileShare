@@ -14,8 +14,8 @@ export default function DrivePage() {
             </div>
             <p className="text-gray-400">Upload, download, and manage files without signing up</p>
           </div>
-          <Link href="/landing" className="text-blue-600 hover:text-blue-800 font-medium transition-colors text-sm">
-            How does this work?
+          <Link href="/landing" className="text-blue-600 hover:text-blue-100 font-medium transition-colors text-md">
+            How does this work?↗
           </Link>
         </header>
 
