@@ -6,20 +6,20 @@ import Image from "next/image";
 export default function LandingPage(){
     return (
       <div className="bg-gradient-to-r from-gray-900 to-slate-800">
-      <header className="border-b backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b backdrop-blur-sm sticky top-0 z-10 px-25">
         <div className="container mx-auto py-4 flex items-center justify-between">
           <Link href="/landing" className="flex items-center gap-2">
             <Folder className="h-8 w-8 text-blue-500" />
-            <span className="font-bold text-3xl">FileShare</span>
+            <span className="font-extrabold text-3xl">FileShare</span>
           </Link>
           <nav className="hidden md:flex items-center gap-11">
-            <Link href="#features" className="text-gray-200 text-xl hover:text-blue-500">
+            <Link href="#features" className="text-gray-200 text-2xl hover:text-blue-500">
               Features
             </Link>
-            <Link href="#how-it-works" className="text-gray-200 text-xl hover:text-blue-500">
+            <Link href="#how-it-works" className="text-gray-200 text-2xl hover:text-blue-500">
               How It Works
             </Link>
-            <Link href="#faq" className="text-gray-200 text-xl hover:text-blue-500">
+            <Link href="#faq" className="text-gray-200 text-2xl hover:text-blue-500">
               FAQ
             </Link>
           </nav>
@@ -47,7 +47,7 @@ export default function LandingPage(){
             Manage and share files instantly. No signup required, <br /> no complicated interface. Just drag, drop, and share.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center p-5">
-            <Link href="/drive">
+            <Link href="/">
               <Button size="xl" className="px-8">
                 <div className="text-lg">
                     Get Started
@@ -78,7 +78,7 @@ export default function LandingPage(){
 
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-900">
+      <section id="features" className="py-20 bg-gray-900 px-30">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-20 [text-shadow:0_0_15px_rgba(0,100,_255,_0.8)]">Key Features</h2>
 
@@ -221,7 +221,7 @@ export default function LandingPage(){
           <p className="text-2xl mb-10 max-w-4xl mx-auto">
             Experience hassle-free file sharing in seconds. No signup, no commitment.
           </p>
-          <Link href="/drive">
+          <Link href="/">
             <Button size="xl" variant="default" className="px-8">
             <div className="text-2xl">
                     FileShare
