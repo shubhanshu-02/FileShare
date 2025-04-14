@@ -1,20 +1,38 @@
-import { uploadFiles } from "@/lib/file-actions";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"
+import { PrismaClient } from '@prisma/client'
 
-export async function POST(request:NextRequest) {
-    try{
-        const formData = await request.formData()
-        const result = await uploadFiles(formData)
+const prisma = new PrismaClient()
 
-        return NextResponse.json({
-            success: true,
-            files:result
-        })
-    }catch(error){
-        console.error("Upload error: ",error)
-        return NextResponse.json(
-            { error: error instanceof Error ? error.message : "Unknown error" },
-            { status: 500 }
-        )
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+  
+  try {
+    const file = await prisma.file.findUnique({
+      where: { id }
+    })
+    
+    if (!file) {
+      return NextResponse.json({ error: "File not found" }, { status: 404 })
     }
+    
+    const isDownload = request.nextUrl.searchParams.get("download") === "true"
+    
+    const url = new URL(file.url)
+
+    if (isDownload) {
+      url.searchParams.set("response-content-disposition", 
+        `attachment; filename="${encodeURIComponent(file.name)}"`)
+    }
+    
+    return NextResponse.redirect(url)
+  } catch (error) {
+    console.error("Error serving file:", error)
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    )
+  }
 }

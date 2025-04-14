@@ -4,6 +4,11 @@ import { FileRecord, FileTypeInfo, FolderRecord, getFiles, getFileTypes, getFold
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { UploadForm } from "./uploadForm";
+import { FolderPlus } from "lucide-react";
+import { FolderCreationDialog } from "./folder-creation-dialog";
+import { FileTypeFilter } from "./file-type-filter";
+import { FolderNavigation } from "./folder-navigation";
+import { FileList } from "./file-list";
 
 
 export function FileExplorer() {
@@ -97,11 +102,11 @@ export function FileExplorer() {
               }}
             />
           </div>
-          <div className="mt-8 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-medium text-sm text-gray-500 uppercase tracking-wider">Folders</h3>
-            <Button variant="ghost" size="sm" onClick={() => setShowFolderDialog(true)} className="h-8 px-2">
-              {/* <FolderPlus className="h-4 w-4 mr-1" /> */}
+          <div className="mt-8 space-y-2">
+          <div className="flex items-center justify-between ">
+            <h3 className="font-medium text-sm text-gray-500 uppercase tracking-wider ">Folders</h3>
+            <Button variant="ghost" size="sm" onClick={() => setShowFolderDialog(true)} className="h-8 px-2 cursor-pointer">
+              <FolderPlus className="h-4 w-4 " />
               New
             </Button>
           </div>
@@ -109,7 +114,7 @@ export function FileExplorer() {
           <button
             onClick={() => navigateToFolder(null)}
             className={`w-full text-left px-3 py-2 rounded-md text-sm ${
-              currentFolder === null ? "bg-blue-50 text-blue-700 font-medium" : "text-gray-700 hover:bg-gray-100"
+              currentFolder === null ? "bg-gray-200 text-blue-700 font-medium" : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             All Files
@@ -124,7 +129,7 @@ export function FileExplorer() {
                 className={`w-full text-left px-3 py-2 rounded-md text-sm ${
                   currentFolder === folder.id
                     ? "bg-blue-50 text-blue-700 font-medium"
-                    : "text-gray-700 hover:bg-gray-100"
+                    : "text-gray-500 hover:bg-gray-400 hover:text-gray-900"
                 }`}
               >
                 {folder.name}
@@ -134,29 +139,29 @@ export function FileExplorer() {
 
         <div className="mt-8 space-y-4">
           <h3 className="font-medium text-sm text-gray-500 uppercase tracking-wider">File Types</h3>
-          {/* <FileTypeFilter fileTypes={fileTypes} activeFilters={activeTypeFilters} onChange={handleTypeFilterChange} /> */}
+          <FileTypeFilter fileTypes={fileTypes} activeFilters={activeTypeFilters} onChange={handleTypeFilterChange} />
         </div>
       </div>
 
       <div className="bg-background p-4 rounded-lg shadow">
-        {/* <FolderNavigation folderPath={folderPath} onNavigate={navigateToFolder} /> */}
+        <FolderNavigation folderPath={folderPath} onNavigate={navigateToFolder} />
 
-        {/* <FileList
+        <FileList
           files={files}
           folders={folders}
           onFolderClick={navigateToFolder}
           onDeleteSuccess={handleFileDeleted}
           isLoading={isLoading}
           activeTypeFilters={activeTypeFilters}
-        /> */}
+        />
       </div>
 
-      {/* <FolderCreationDialog
+      <FolderCreationDialog
         open={showFolderDialog}
         onOpenChange={setShowFolderDialog}
         currentFolder={currentFolder}
         onFolderCreated={handleFolderCreated}
-      /> */}
+      />
         </div>
     )
 }
