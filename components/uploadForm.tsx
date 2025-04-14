@@ -100,7 +100,7 @@ export function UploadForm({ currentFolder, onUploadComplete }: UploadFormProps)
       xhr.addEventListener("error", () => {
         throw new Error("Network error occurred during upload")
       })
-      xhr.open("POST", "api/files", true)
+      xhr.open("POST", "api/upload", true)
       xhr.send(formData)
 
     } catch (error) {
