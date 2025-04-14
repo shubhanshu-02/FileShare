@@ -183,28 +183,28 @@ export default function LandingPage(){
           <h2 className="text-5xl font-bold text-center mb-12 [text-shadow:0_0_15px_rgba(0,100,_255,_0.8)]">Frequently Asked Questions</h2>
 
           <div className="space-y-6">
-            <div className="bg-background p-8 rounded-lg shadow-sm">
+            <div className="bg-background p-8 rounded-lg drop-shadow-[0_0_3px_rgba(43,127,255,1)]">
               <h3 className="text-2xl font-semibold mb-2">How long are files stored?</h3>
               <p className="text-xl text-gray-400">
                 Files are stored for 365 days after the last access. If a file isn&apos;t accessed for 365 days, it will be automatically removed.
               </p>
             </div>
 
-            <div className="bg-background p-8 rounded-lg shadow-sm">
+            <div className="bg-background p-8 rounded-lg drop-shadow-[0_0_3px_rgba(43,127,255,1)]">
               <h3 className="text-2xl font-semibold mb-2">Is there a size limit for uploads?</h3>
               <p className="text-xl text-gray-400">
                 Yes, the maximum file size is 100MB per file. There&apos;s also a limit of 1GB total storage per session.
               </p>
             </div>
 
-            <div className="bg-background p-8 rounded-lg shadow-sm">
+            <div className="bg-background p-8 rounded-lg drop-shadow-[0_0_3px_rgba(43,127,255,1)]">
               <h3 className="text-2xl font-semibold mb-2">Can I password protect my files?</h3>
               <p className="text-xl text-gray-400">
                 Not currently. Since FileShare is designed for simplicity, we don&apos;t offer password protection. For sensitive files, we recommend using an traditional service.
               </p>
             </div>
 
-            <div className="bg-background p-8 rounded-lg shadow-sm">
+            <div className="bg-background p-8 rounded-lg drop-shadow-[0_0_3px_rgba(43,127,255,1)]">
               <h3 className="text-2xl font-semibold mb-2">Can I create a permanent account?</h3>
               <p className="text-xl text-gray-400">
                 FileShare is designed to be account-free. If you need persistent storage with an account, you might want to use some other cloud storage service.
