@@ -1,6 +1,5 @@
 "use client"
 
-import { uploadFiles } from "@/lib/file-actions"
 import { FileIcon, Upload, X } from "lucide-react"
 import { useRef, useState } from "react"
 import { toast } from "sonner"

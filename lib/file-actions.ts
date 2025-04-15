@@ -2,9 +2,7 @@
 
 import { PrismaClient } from '@prisma/client'
 // import Folder from '@prisma/client'
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
-import fs from "fs";
-import path from "path";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
 import { v4 } from "uuid";
 import { revalidatePath } from 'next/cache';
 
@@ -95,7 +93,7 @@ const s3Client = new S3Client({
 
     if(fileEntries.length === 0) throw new Error("no files provided")
       
-    const uploadPromises = fileEntries.map(async ([_, file]) => {
+    const uploadPromises = fileEntries.map(async ([, file]) => {
       if(!(file instanceof File)) return null
 
       const buffer = Buffer.from(await file.arrayBuffer())
@@ -154,16 +152,39 @@ const s3Client = new S3Client({
     }))
   }
 
-  export async function getFolders(parentId: string | null = null) {
-    const folders = await prisma.folder.findMany()
+  export async function getFolders(parentId: string | null = null): Promise<FolderRecord[]> {
+    const folders = await prisma.folder.findMany({
+      where: {
+        parentId: parentId
+      },
+      orderBy: {
+        name: 'asc' 
+      }
+    })
     
-    return folders.map(folder  => ({
+    return folders.map(folder => ({
       id: folder.id,
       name: folder.name,
       parentId: folder.parentId,
       createdAt: folder.createdAt.toISOString()
     }))
   }
+
+  export async function getAllFolders(): Promise<FolderRecord[]> {
+    const folders = await prisma.folder.findMany({
+      orderBy: {
+        name: 'asc'
+      }
+    })
+    
+    return folders.map(folder => ({
+      id: folder.id,
+      name: folder.name,
+      parentId: folder.parentId,
+      createdAt: folder.createdAt.toISOString()
+    }))
+  }
+
 
   export async function createFolder(data:{name:string, parentId:string | null }) {
     const folder = await prisma.folder.create({

@@ -6,7 +6,6 @@ import { useState } from "react"
 import { createFolder } from "@/lib/file-actions"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
-import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 
 

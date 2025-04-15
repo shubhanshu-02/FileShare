@@ -1,6 +1,6 @@
 "use client"
 
-import { FileRecord, FileTypeInfo, FolderRecord, getFiles, getFileTypes, getFolders } from "@/lib/file-actions";
+import { FileRecord, FileTypeInfo, FolderRecord, getAllFolders, getFiles, getFileTypes } from "@/lib/file-actions";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { UploadForm } from "./uploadForm";
@@ -32,7 +32,7 @@ export function FileExplorer() {
     async function loadFilesAndFolders() {
         setIsLoading(true)
         try {
-            const [fileList, folderList] = await Promise.all([getFiles(currentFolder), getFolders(currentFolder)])
+            const [fileList, folderList] = await Promise.all([getFiles(currentFolder), getAllFolders()])
 
             setFiles(fileList)
             setFolders(folderList)
@@ -148,7 +148,7 @@ export function FileExplorer() {
 
         <FileList
           files={files}
-          folders={folders}
+          folders={folders.filter(folder => folder.parentId === currentFolder)}
           onFolderClick={navigateToFolder}
           onDeleteSuccess={handleFileDeleted}
           isLoading={isLoading}
