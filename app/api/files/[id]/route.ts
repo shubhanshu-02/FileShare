@@ -5,10 +5,11 @@ const prisma = new PrismaClient()
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const id = context.params.id
-  
+  const params = await context.params
+  const id = params.id
+
   try {
     const file = await prisma.file.findUnique({
       where: { id }
