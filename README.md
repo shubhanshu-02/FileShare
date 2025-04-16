@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FileShare - Open Source File Sharing Platform
 
-## Getting Started
+FileShare is a modern, open-source file sharing platform that allows users to upload, organize, and share files without requiring account creation. Built with Next.js, TypeScript, and AWS S3, it provides a seamless and intuitive user experience for file management.
 
-First, run the development server:
+[File Share](https://fileshareio.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- *No Account Required*: Instant file sharing without signup or login
+- *Intuitive File Management*: Upload, download, preview, and organize files
+- *Folder Organization*: Create folders and subfolders to organize content
+- *File Preview*: Built-in preview for images, videos, PDFs, and text files
+- *Multiple File Upload*: Upload multiple files at once with real-time progress tracking
+- *File Filtering, Searching, Sorting*: Filter files by type (images, documents, videos, etc.) Quickly and Sort files by name, date, or size
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Technology Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- *Frontend*: Next.js 14, React, TypeScript, Tailwind CSS
+- *UI Components*: shadcn/ui, Radix UI
+- *Backend*: Next.js API Routes, Server Actions
+- *Database*: PostgreSQL with Prisma ORM
+- *Storage*: AWS S3
+- *Deployment*: Vercel
 
-## Learn More
+## 📋 Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18.x or higher
+- PostgreSQL database
+- AWS account with S3 bucket
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ENV STRUCTURE
+DATABASE_URL="postgresql://username:password@localhost:5432/FileShare?schema=public"<br>
+AWS_REGION=your-region<br>
+AWS_ACCESS_KEY_ID=your-access-key<br>
+AWS_SECRET_ACCESS_KEY=your-secret-key<br>
+S3_BUCKET_NAME=your-bucket-name<br>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+├── app/                    # Next.js App Router<br>
+│   ├── api/                # API Routes<br>
+│   └── page.tsx            # Landing page<br>
+├── components/             # React components<br>
+│   ├── ui/                 # UI components<br>
+│   ├── file-card.tsx       # File card component<br>
+│   ├── file-explorer.tsx   # Main file explorer<br>
+│   └── ...                 # Other components<br>
+├── lib/                    # Utility functions<br>
+│   ├── file-actions.ts     # Server actions for file operations<br>
+│   └── utils.ts            # Utility functions<br>
+├── prisma/                 # Prisma schema and migrations<br>
+│   └── schema.prisma       # Database schema<br>
+├── public/                 # Static assets<br>
+└── ...                     # Config files<br>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 🔄 API Endpoints
+
+- GET /api/files/:id - Get a specific file
+- POST /api/upload - Upload files
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (git checkout -b feature/amazing-feature)
+3. Commit your changes (git commit -m 'Add some amazing feature')
+4. Push to the branch (git push origin feature/amazing-feature)
+5. Open a Pull Request
