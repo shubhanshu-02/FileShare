@@ -2,7 +2,7 @@
 
 FileShare is a modern, open-source file sharing platform that allows users to upload, organize, and share files without requiring account creation. Built with Next.js, TypeScript, and AWS S3, it provides a seamless and intuitive user experience for file management.
 
-[File Share](https://fileshareio.vercel.app)
+## [File Share ↗](https://fileshareio.vercel.app)
 
 ## 🚀 Features
 
