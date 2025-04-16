@@ -1,4 +1,4 @@
-import { ArrowRight, Download, Folder, Search, Shield, Upload, Zap } from "lucide-react";
+import { ArrowRight, Download, Folder, FolderOpen, Search, Shield, Upload, Zap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
 import Image from "next/image";
@@ -9,7 +9,7 @@ export default function LandingPage(){
       <header className="border-b backdrop-blur-sm sticky top-0 z-10 px-25">
         <div className="container mx-auto py-4 flex items-center justify-between">
           <Link href="/landing" className="flex items-center gap-2">
-            <Folder className="h-8 w-8 text-blue-500" />
+            <FolderOpen className="h-8 w-8 text-blue-500" />
             <span className="font-extrabold text-3xl">FileShare</span>
           </Link>
           <nav className="hidden md:flex items-center gap-11">
@@ -237,7 +237,7 @@ export default function LandingPage(){
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <Folder className="h-8 w-8 text-blue-500" />
+            <FolderOpen className="h-8 w-8 text-blue-500" />
             <span className="font-bold text-2xl">FileShare</span>
             </div>
 
